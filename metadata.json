@@ -1,0 +1,6 @@
+{
+  "name": "DriveMaster AI - Diagnóstico de Inversores",
+  "description": "Sistema especialista avançado para diagnóstico de falhas, interpretação de alarmes e consulta de parâmetros de inversores de frequência multimarcas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
