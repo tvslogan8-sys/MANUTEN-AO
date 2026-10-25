@@ -7,12 +7,12 @@ import {
   Zap,
   Cpu,
   BookOpen,
-  Sparkles,
+  Network,
 } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'diagnose' | 'history' | 'edge-function' | 'nr10';
-  setActiveTab: (tab: 'diagnose' | 'history' | 'edge-function' | 'nr10') => void;
+  activeTab: 'diagnose' | 'history' | 'edge-function' | 'nr10' | 'diagram';
+  setActiveTab: (tab: 'diagnose' | 'history' | 'edge-function' | 'nr10' | 'diagram') => void;
   historyCount: number;
   engineStatus: {
     online: boolean;
@@ -83,6 +83,19 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Cpu className="w-4 h-4" />
               <span>Diagnóstico & Parâmetros</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('diagram')}
+              className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center space-x-1.5 ${
+                activeTab === 'diagram'
+                  ? 'bg-sky-600/20 text-sky-400 border border-sky-500/40 shadow-sm shadow-sky-500/10'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'
+              }`}
+              title="Diagrama Elétrico Simplificado do Inversor"
+            >
+              <Network className="w-4 h-4 text-sky-400" />
+              <span>Diagrama Elétrico</span>
             </button>
 
             <button

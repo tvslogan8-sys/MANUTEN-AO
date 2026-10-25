@@ -339,6 +339,34 @@ export function generateReportPDF(report: TechnicalReport): void {
     y += recLines.length * 3.5 + 1;
   });
 
+  // --- ESQUEMA SIMPLIFICADO DE LIGAÇÃO E PINAGEM ---
+  checkPageBreak(30);
+  doc.setFillColor(15, 23, 42);
+  doc.rect(margin, y, contentWidth, 6, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(255, 255, 255);
+  doc.text('6. ESQUEMA DE LIGAÇÃO SIMPLIFICADO & PINAGEM DOS BORNES', margin + 3, y + 4.2);
+  y += 8;
+
+  doc.setFillColor(241, 245, 249);
+  doc.setDrawColor(203, 213, 225);
+  doc.roundedRect(margin, y, contentWidth, 18, 1, 1, 'FD');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.2);
+  doc.setTextColor(14, 165, 233);
+  doc.text(`ESPECIFICAÇÕES DE FIAÇÃO - ${report.manufacturer} ${report.model}:`, margin + 3, y + 4.5);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.8);
+  doc.setTextColor(30, 41, 59);
+  doc.text('• Entrada Rede CA: Disjuntor termomagnético Curva C + Filtro RFI (L1, L2, L3 + PE aterrado).', margin + 3, y + 8.5);
+  doc.text('• Saída Motor: Bornes U, V, W com cabo blindado simétrico aterrado 360° em ambas extremidades.', margin + 3, y + 12);
+  doc.text(`• Link CC (+/-): Barramento de alta tensão (~800V CC). Espera mínima: ${report.nr10Safety.dcBusDischargeTimeMinutes} min antes de intervenção.`, margin + 3, y + 15.5);
+
+  y += 22;
+
   // --- ASSINATURA DO RESPONSÁVEL TÉCNICO ---
   checkPageBreak(35);
   y += 4;

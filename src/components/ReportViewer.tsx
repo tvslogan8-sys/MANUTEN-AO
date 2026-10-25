@@ -21,9 +21,11 @@ import {
   Thermometer,
   Wrench,
   Cpu,
+  Network,
 } from 'lucide-react';
 import { TechnicalReport } from '../types/diagnosis';
 import { generateReportPDF } from '../utils/pdfGenerator';
+import { ConnectionDiagram } from './ConnectionDiagram';
 
 interface ReportViewerProps {
   report: TechnicalReport;
@@ -37,7 +39,7 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({
   onNewSearch,
 }) => {
   const [copied, setCopied] = useState<boolean>(false);
-  const [activeSection, setActiveSection] = useState<'all' | 'rootCause' | 'actions' | 'safety' | 'params'>('all');
+  const [activeSection, setActiveSection] = useState<'all' | 'rootCause' | 'actions' | 'safety' | 'params' | 'diagram'>('all');
   const [technicianName, setTechnicianName] = useState<string>(report.technicianData?.name || '');
   const [technicianRegister, setTechnicianRegister] = useState<string>(report.technicianData?.register || '');
   const [companyName, setCompanyName] = useState<string>(report.technicianData?.company || '');
@@ -368,7 +370,27 @@ Emitido por DriveMaster AI Engine (T=0.15)
         >
           Parâmetros do Modelo
         </button>
+        <button
+          onClick={() => setActiveSection('diagram')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 ${
+            activeSection === 'diagram'
+              ? 'bg-sky-500 text-white shadow'
+              : 'bg-slate-800 text-slate-400 hover:text-white'
+          }`}
+        >
+          <Network className="w-3.5 h-3.5 text-sky-400" />
+          <span>Diagrama Elétrico ({report.model})</span>
+        </button>
       </div>
+
+      {/* BLOCO DE DIAGRAMA DE CONEXÃO SIMPLIFICADO */}
+      {(activeSection === 'all' || activeSection === 'diagram') && (
+        <ConnectionDiagram
+          manufacturer={report.manufacturer}
+          model={report.model}
+          activeFaultCode={report.queryCode}
+        />
+      )}
 
       {/* BLOCO 1: CAUSA RAIZ DETALHADA (4 QUADRANTES) */}
       {(activeSection === 'all' || activeSection === 'rootCause') && (

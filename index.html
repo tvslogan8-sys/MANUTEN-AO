@@ -3,6 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return originalFetch;
+            },
+            set: function(val) {
+              originalFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (err) {}
+
+        // Suppress external extension injection errors
+        window.addEventListener('error', function(e) {
+          if (
+            e.filename &&
+            (e.filename.indexOf('chrome-extension://') !== -1 ||
+             e.filename.indexOf('moz-extension://') !== -1)
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, true);
+      })();
+    </script>
     <title>DriveMaster AI - Diagnóstico de Inversores de Frequência</title>
     <meta name="description" content="Sistema especialista avançado para diagnóstico de falhas, interpretação de alarmes e consulta de parâmetros de inversores de frequência multimarcas." />
     <meta property="og:title" content="DriveMaster AI - Diagnóstico de Inversores de Frequência" />
